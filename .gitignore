@@ -1,0 +1,6 @@
+output/
+pelican-plugins/
+plugins/
+__pycache__/
+content/pages/contact.md
+pelican-bootstrap3/

@@ -7,7 +7,7 @@ SITENAME = '0x00s blog'
 SITEURL = ''
 
 PATH = 'content'
-STATIC_PATHS = ['pdfs']
+STATIC_PATHS = ['pdfs', 'images']
 
 TIMEZONE = 'Europe/Berlin'
 

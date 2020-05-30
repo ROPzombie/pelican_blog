@@ -1,4 +1,4 @@
-Title: Writeup root-me Ethernet Frame
+Title: Writeup root-me Network
 Date: 2020-05-28 10:20
 Category: writeups
 Tags: writeup, network, root-me
@@ -7,6 +7,28 @@ Authors: 0x00
 Summary: Quick writeup of the 3rd network challenge of root-me.org
 
 ### root-me.org
+
+#### Network Ch1 FTP - Authentication
+
+Original challenge can be found at: <https://www.root-me.org/en/Challenges/Network/FTP-authentication>
+
+This is an easy one: We get a pcap file, which can open in Wireshark.
+![FTP Auth in Wireshark](images/ch1_ws.jpg)
+First thing filter for FTP protocol to lessen the seen output. Second watch out for requests and responses that do so say something about login and password stuff. And there you go, boom! Just right there is the password. Piece of cake!
+
+#### Network Ch2 - TELNET - Authentication
+
+Original challenge can be found at: <https://www.root-me.org/en/Challenges/Network/TELNET-authentication>
+
+This challenge is about telnet a veteran under the network protocols. So its security :=) even though you can often upgrade crypto via startTLS, if supported.
+
+However: We supposed to uncover a username and password. So just filter for telnet and it has to contain password:
+```
+telnet contains Password
+```
+Ah, packet 59 there it is and the following packets are the password in clear text. Each packet has just a single character. But no worries it is a pretty short password. After that telnet contains just some Shell commands and can be ignored.
+![Telnet Auth in Wireshark](images/telnet.png)
+
 #### Network Ch3 - Raw Ethernet Frame
 
 Original challenge can be found at: <https://www.root-me.org/en/Challenges/Network/ETHERNET-frame>
@@ -85,3 +107,46 @@ echo "BASECODE==" | base64 -d
 ```
 So now we have our flag and can get the points.
 Really nice challenge for beginners interested in networking. As you do analyse through the OSI model. It was fun to dig through this.
+
+#### Network Ch4 Twitter Authentication
+
+Original challenge can be found at: <https://www.root-me.org/en/Challenges/Network/Twitter-authentication-101>
+
+We have to retrieve the password for a twitter session. As twitter sits on the application level and we got a pcap file, this should be pertty easy.
+
+After opening the pcap file, we see its HTTP in the application layer. Thus if we further investigate we found the http.authorization section, with a basic authentication mechanism. And this means no real security the password is encoded via Base64. 
+But also in clear text in the authorization section were it states the credentials.
+
+![Twitter Auth in Wireshark](images/twitter_auth_censored.jpg)
+
+#### Network Ch5 Bluetooth - Unknown file
+
+Original challenge can be found at: <https://www.root-me.org/en/Challenges/Network/Bluetooth-Unknown-file>
+
+This challenge goal is to find out MAC address and device name and calculate tha SHA1 value of the concatanation.
+
+We get a binary file that is actually a BTSnoop file, if we run the file command we get:
+```bash
+file ch18.bin 
+ch18.bin: BTSnoop version 1, HCI UART (H4)
+```
+This file can be analyzed via Wireshark.
+Here comes the big advantag of Wireshark, after opening we can simply display the Bluetooth device. 
+
+![Bluetooth address in Wireshark](images/bt_snoop.png)
+
+This will get us the device name and the MAC address, which we simply have to concat and let SHA1 run over this string.
+
+The MAC address is
+```
+0c:b3:19:b9:4f:c6
+```
+Device Name:
+```
+C6GT-S7390G
+```
+And now just put it into the termial like this:
+```
+echo "XXXXXXXXXXXXXXXXXXX" | sha1sum
+```
+

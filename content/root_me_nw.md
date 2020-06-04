@@ -2,7 +2,7 @@ Title: Writeup root-me Network
 Date: 2020-05-28 10:20
 Category: writeups
 Tags: writeup, network, root-me
-Slug: root-me, raw ethernet
+Slug: root-me
 Authors: 0x00
 Summary: Quick writeup of the 3rd network challenge of root-me.org
 

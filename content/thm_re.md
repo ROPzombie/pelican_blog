@@ -2,7 +2,7 @@ Title: Writeup tryhackme Reverse Engineering
 Date: 2020-06-04 10:20
 Category: writeups
 Tags: writeup, reversing, re, asm
-Slug: tryhackme
+Slug: thm_re
 Authors: 0x00
 Summary: Quick writeup of the reverse engineering room from tryhackme site
 

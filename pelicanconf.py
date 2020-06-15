@@ -42,7 +42,7 @@ CC_LICENSE = "CC-BY"
 # Social widget
 SOCIAL = (('@github', 'https://github.com/sh3llc0d3r'),
             ('@twitter', 'https://twitter.com/0xdeadbeef6'),
-          ('z01db3rg@gitlab.com', 'https://gitlab.com/z01db3rg'))
+          ('@gitlab', 'https://gitlab.com/z01db3rg'))
 
 DEFAULT_PAGINATION = 10
 
